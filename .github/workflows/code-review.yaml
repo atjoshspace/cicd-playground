@@ -1,0 +1,27 @@
+name: PR Template
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  pr_template:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create PR Template
+      run: |
+        TEMPLATE='## Description\n\n[Enter a brief description of the changes made in this PR.]\n\n ## Reference\n\n[Enter a link to the asana ticket associated with this PR.]'
+        echo "$TEMPLATE" > PULL_REQUEST_TEMPLATE.md
+      shell: bash
+    - name: Add PR Template
+      uses: peter-evans/create-pull-request@v3.10.1
+      with:
+        commit-message: Add pull request template
+        branch: pull-request-template
+        title: Add pull request template
+        body: |
+          This pull request adds a template for pull request creation.
+          Please use this template when creating new pull requests.
+        path: PULL_REQUEST_TEMPLATE.md
+        token: ${{ secrets.GITHUB_TOKEN }}
+
